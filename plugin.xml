@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="bidchat-photo-picker" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>PhotoPicker</name>
+    <js-module name="PhotoPicker" src="www/PhotoPicker.js">
+        <clobbers target="cordova.plugins.PhotoPicker" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="PhotoPicker">
+                <param name="android-package" value="com.bidchat.photopicker.PhotoPicker" />
+            </feature>
+        </config-file>
+        
+        <framework src="com.github.lovetuzitong:MultiImageSelector:1.2" />
+
+        <config-file parent="/*" target="AndroidManifest.xml">
+        	 <uses-permission android:name="android.permission.READ_CALENDAR"/>
+        	 <activity
+            	android:configChanges="orientation|screenSize"
+            	android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
+        </config-file>
+
+
+        <source-file src="src/android/PhotoPicker.java" target-dir="src/com.bidchat.photopicker/" />
+
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
+
+    </platform>
+</plugin>
