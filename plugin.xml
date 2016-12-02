@@ -10,20 +10,17 @@
                 <param name="android-package" value="com.bidchat.photopicker.PhotoPicker" />
             </feature>
         </config-file>
-        
-        <framework src="com.github.lovetuzitong:MultiImageSelector:1.2" />
-
+        <framework src="com.github.rahul-bidchat:BidchatPhotoPickerAndroid:992802dad8" />
         <config-file parent="/*" target="AndroidManifest.xml">
-        	 <uses-permission android:name="android.permission.READ_CALENDAR"/>
-        	 <activity
-            	android:configChanges="orientation|screenSize"
-            	android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
+            <activity android:configChanges="orientation|screenSize" android:name="com.desmond.squarecamera.CameraActivity" />
         </config-file>
-
-
+        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-feature android:name="android.hardware.camera2" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        </config-file>
         <source-file src="src/android/PhotoPicker.java" target-dir="src/com.bidchat.photopicker/" />
-
         <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
-
     </platform>
 </plugin>

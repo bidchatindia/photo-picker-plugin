@@ -2,6 +2,7 @@ package com.bidchat.photopicker;
 
 import android.content.Intent;
 import android.widget.Toast;
+import android.net.Uri;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -14,8 +15,9 @@ import org.json.JSONObject;
 import java.util.List;
 
 import io.cordova.hellocordova.MainActivity;
-import me.nereo.multi_image_selector.MultiImageSelector;
-import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+
+import com.desmond.squarecamera.CameraActivity;
+import com.desmond.squarecamera.ImageUtility;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -40,11 +42,8 @@ public class PhotoPicker extends CordovaPlugin {
             pr.setKeepCallback(true);
             callbackContext.sendPluginResult(pr);
             cordova.setActivityResultCallback(this);
-            Intent intent = new Intent(cordova.getActivity(), MultiImageSelectorActivity.class);
-            intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-            intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 9);
-            intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_SINGLE);
-            cordova.getActivity().startActivityForResult(intent, CAMERA_RQ);
+            Intent startCustomCameraIntent = new Intent(cordova.getActivity(), CameraActivity.class);
+            cordova.getActivity().startActivityForResult(startCustomCameraIntent, CAMERA_RQ);
             return true;
         }
         return false;
@@ -62,8 +61,8 @@ public class PhotoPicker extends CordovaPlugin {
 
             if (resultCode == RESULT_OK) {
                 try {
-                    List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                    this.callbackContext.success(path.get(0));
+                    Uri photoUri = data.getData();
+                    this.callbackContext.success(photoUri.toString());
                 }
                 catch (Exception e)
                 {
